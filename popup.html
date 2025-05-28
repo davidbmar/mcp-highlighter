@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            width: 350px;
+            min-height: 400px;
+            margin: 0;
+            padding: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .subtitle {
+            font-size: 12px;
+            opacity: 0.8;
+            margin: 4px 0 0 0;
+        }
+        
+        .section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .stat-label {
+            font-size: 11px;
+            opacity: 0.8;
+        }
+        
+        .button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            margin: 4px 0;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #45a049;
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-danger {
+            background: #f44336;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #da190b;
+        }
+        
+        .buffer-list {
+            max-height: 150px;
+            overflow-y: auto;
+            margin-top: 8px;
+        }
+        
+        .buffer-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px;
+            margin: 4px 0;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .buffer-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .buffer-preview {
+            opacity: 0.8;
+            margin-top: 4px;
+            font-size: 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .status {
+            font-size: 11px;
+            text-align: center;
+            padding: 8px;
+            margin: 8px 0;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .status.success {
+            background: rgba(76, 175, 80, 0.3);
+            display: block;
+        }
+        
+        .status.error {
+            background: rgba(244, 67, 54, 0.3);
+            display: block;
+        }
+        
+        .status.info {
+            background: rgba(33, 150, 243, 0.3);
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 class="title">🧠 MCP Memory</h1>
+        <p class="subtitle">Memory Collection Protocol</p>
+    </div>
+    
+    <div class="section">
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number" id="bufferCount">0</div>
+                <div class="stat-label">Buffers</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="totalSize">0KB</div>
+                <div class="stat-label">Total Size</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="sessionTime">0m</div>
+                <div class="stat-label">Session</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <button class="button btn-primary" id="scanBtn">🔍 Scan for MCP Blocks</button>
+        <button class="button btn-secondary" id="viewBuffersBtn">👁️ View Buffers</button>
+        <button class="button btn-secondary" id="uploadBtn">☁️ Upload to S3</button>
+        <button class="button btn-danger" id="clearBtn">🗑️ Clear Buffers</button>
+    </div>
+    
+    <div class="status" id="statusMsg"></div>
+    
+    <div class="section" id="bufferSection" style="display: none;">
+        <h3 style="margin: 0 0 8px 0; font-size: 14px;">Recent Buffers</h3>
+        <div class="buffer-list" id="bufferList"></div>
+    </div>
+
+    <script>
+        let startTime = Date.now();
+        
+        // Update session timer
+        function updateTimer() {
+            const elapsed = Math.floor((Date.now() - startTime) / 60000);
+            document.getElementById('sessionTime').textContent = elapsed + 'm';
+        }
+        setInterval(updateTimer, 1000);
+        
+        // Show status message
+        function showStatus(message, type = 'info') {
+            const statusEl = document.getElementById('statusMsg');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+            setTimeout(() => {
+                statusEl.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Update buffer statistics
+        function updateStats() {
+            chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                chrome.tabs.executeScript(tabs[0].id, {
+                    code: `
+                        const buffers = window.mcpBuffers || [];
+                        const totalSize = buffers.reduce((sum, buf) => sum + buf.content.length, 0);
+                        ({
+                            count: buffers.length,
+                            size: Math.round(totalSize / 1024 * 10) / 10,
+                            buffers: buffers.slice(-5).map(buf => ({
+                                preview: buf.content.substring(0, 50) + (buf.content.length > 50 ? '...' : ''),
+                                timestamp: buf.timestamp,
+                                size: buf.content.length
+                            }))
+                        });
+                    `
+                }, function(result) {
+                    if (result && result[0]) {
+                        const data = result[0];
+                        document.getElementById('bufferCount').textContent = data.count;
+                        document.getElementById('totalSize').textContent = data.size + 'KB';
+                        
+                        // Update buffer list
+                        const bufferList = document.getElementById('bufferList');
+                        const bufferSection = document.getElementById('bufferSection');
+                        
+                        if (data.buffers.length > 0) {
+                            bufferSection.style.display = 'block';
+                            bufferList.innerHTML = data.buffers.map(buf => `
+                                <div class="buffer-item">
+                                    <div>${new Date(buf.timestamp).toLocaleTimeString()}</div>
+                                    <div class="buffer-preview">${buf.preview}</div>
+                                </div>
+                            `).join('');
+                        } else {
+                            bufferSection.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        }
+        
+        // Scan for MCP blocks
+        document.getElementById('scanBtn').addEventListener('click', function() {
+            chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                chrome.tabs.executeScript(tabs[0].id, {
+                    code: `
+                        if (typeof scanForMCPBlocks === 'function') {
+                            const found = scanForMCPBlocks();
+                            found;
+                        } else {
+                            'MCP scanner not found - please reload the page';
+                        }
+                    `
+                }, function(result) {
+                    if (result && result[0]) {
+                        if (typeof result[0] === 'number') {
+                            showStatus(`Found ${result[0]} new MCP blocks!`, 'success');
+                        } else {
+                            showStatus(result[0], 'error');
+                        }
+                        updateStats();
+                    }
+                });
+            });
+        });
+        
+        // View buffers in console
+        document.getElementById('viewBuffersBtn').addEventListener('click', function() {
+            chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                chrome.tabs.executeScript(tabs[0].id, {
+                    code: `
+                        console.log('=== MCP BUFFERS ===');
+                        console.log(window.mcpBuffers || []);
+                        console.log('Use getMCPBuffers() to access programmatically');
+                        'Buffers logged to console';
+                    `
+                }, function(result) {
+                    showStatus('Buffers logged to console', 'info');
+                });
+            });
+        });
+        
+        // Upload to S3
+        document.getElementById('uploadBtn').addEventListener('click', function() {
+            chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                chrome.tabs.executeScript(tabs[0].id, {
+                    code: `
+                        if (typeof sendBuffersToS3 === 'function') {
+                            sendBuffersToS3().then(result => {
+                                console.log('S3 Upload Result:', result);
+                                return 'Upload initiated - check console for results';
+                            }).catch(err => {
+                                console.error('S3 Upload Error:', err);
+                                return 'Upload failed - check console for details';
+                            });
+                        } else {
+                            'S3 upload function not found';
+                        }
+                    `
+                }, function(result) {
+                    if (result && result[0]) {
+                        showStatus(result[0], result[0].includes('failed') ? 'error' : 'success');
+                    }
+                });
+            });
+        });
+        
+        // Clear buffers
+        document.getElementById('clearBtn').addEventListener('click', function() {
+            if (confirm('Clear all MCP buffers? This cannot be undone.')) {
+                chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                    chrome.tabs.executeScript(tabs[0].id, {
+                        code: `
+                            if (typeof clearMCPBuffers === 'function') {
+                                clearMCPBuffers();
+                                'Buffers cleared';
+                            } else {
+                                'Clear function not found';
+                            }
+                        `
+                    }, function(result) {
+                        showStatus('Buffers cleared', 'info');
+                        updateStats();
+                    });
+                });
+            }
+        });
+        
+        // Initial stats update
+        updateStats();
+        
+        // Refresh stats every 5 seconds
+        setInterval(updateStats, 5000);
+    </script>
+</body>
+</html>

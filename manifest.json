@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "MCP Text Highlighter",
+  "version": "1.0",
+  "description": "Highlights text between <mcp> and </mcp> tags in bright yellow",
+  "permissions": [
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "MCP Highlighter"
+  }
+}

@@ -1,0 +1,30 @@
+/* Styles for MCP highlighted text */
+.mcp-highlight {
+  background-color: #ffff00 !important; /* Bright yellow background */
+  color: #000000 !important; /* Black text for contrast */
+  padding: 2px 4px !important;
+  border-radius: 3px !important;
+  font-weight: bold !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+  display: inline !important;
+}
+
+/* Animation for newly highlighted text */
+.mcp-highlight {
+  animation: mcp-glow 0.5s ease-in-out;
+}
+
+@keyframes mcp-glow {
+  0% {
+    background-color: #ffff99;
+    transform: scale(1);
+  }
+  50% {
+    background-color: #ffff00;
+    transform: scale(1.05);
+  }
+  100% {
+    background-color: #ffff00;
+    transform: scale(1);
+  }
+}
