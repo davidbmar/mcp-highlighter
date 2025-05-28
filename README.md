@@ -1,4 +1,4 @@
-# MCP (Memory Collection Protocol) Chrome Extension
+# MCP (Memory Collection Protocol) Chrome Extension (which we will actually use to connect to MCP Anthropic client)
 
 A Chrome extension that enables **persistent memory across LLM instances** by detecting and collecting memory blocks from Claude conversations for cross-session persistence.
 
