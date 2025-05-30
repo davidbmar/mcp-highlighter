@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP Test Blocks - Chrome Extension Testing</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-block {
+            margin: 25px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            border-radius: 4px;
+        }
+        .block-title {
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+        .mcp-content {
+            background: #fff;
+            padding: 15px;
+            border-radius: 4px;
+            border: 2px dashed #28a745;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+        .instructions {
+            background: #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .step {
+            margin: 15px 0;
+            padding: 10px;
+            background: #d4edda;
+            border-radius: 4px;
+            border-left: 3px solid #28a745;
+        }
+        .validation {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 MCP Test Blocks</h1>
+        <p>This page contains 4 test MCP blocks for validating your Chrome extension's memory collection functionality.</p>
+        
+        <div class="instructions">
+            <strong>Testing Instructions:</strong>
+            <div class="step">1. Install your MCP Chrome extension</div>
+            <div class="step">2. Look for the blue "🧠 SCAN" button (top-right corner)</div>
+            <div class="step">3. Click the scan button to detect MCP blocks</div>
+            <div class="step">4. Open Developer Console (F12) and run <code>viewBuffers()</code></div>
+            <div class="step">5. Verify all 4 blocks were captured correctly</div>
+        </div>
+
+        <!-- Test Block 1: Python Function -->
+        <div class="test-block">
+            <div class="block-title">Test Block 1: Python Function</div>
+            <div class="mcp-content">
+[MCP-START]
+def calculate_fibonacci_sequence(n):
+    """
+    Generate Fibonacci sequence up to n numbers
+    Optimized version with memoization for better performance
+    """
+    if n <= 0:
+        return []
+    elif n == 1:
+        return [0]
+    elif n == 2:
+        return [0, 1]
+    
+    fib_sequence = [0, 1]
+    for i in range(2, n):
+        next_fib = fib_sequence[i-1] + fib_sequence[i-2]
+        fib_sequence.append(next_fib)
+    
+    return fib_sequence
+
+# Usage example:
+# result = calculate_fibonacci_sequence(10)
+# print(result)  # [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+[MCP-END]
+            </div>
+        </div>
+
+        <!-- Test Block 2: JSON Configuration -->
+        <div class="test-block">
+            <div class="block-title">Test Block 2: JSON Configuration</div>
+            <div class="mcp-content">
+[MCP-START]
+{
+  "project": {
+    "name": "MCP Chrome Extension",
+    "version": "1.0.0",
+    "description": "Memory Collection Protocol for persistent LLM context"
+  },
+  "features": {
+    "memory_capture": true,
+    "buffer_storage": true,
+    "console_api": true,
+    "s3_integration": "planned",
+    "cross_session_persistence": "in_development"
+  },
+  "configuration": {
+    "max_buffer_size": 1000,
+    "auto_scan": false,
+    "deduplication": true,
+    "timestamp_format": "ISO-8601"
+  },
+  "api_endpoints": {
+    "scan": "/api/scan",
+    "buffers": "/api/buffers",
+    "upload": "/api/s3/upload",
+    "clear": "/api/buffers/clear"
+  },
+  "status": "active_testing"
+}
+[MCP-END]
+            </div>
+        </div>
+
+        <!-- Test Block 3: Documentation -->
+        <div class="test-block">
+            <div class="block-title">Test Block 3: Documentation Block</div>
+            <div class="mcp-content">
+[MCP-START]
+# MCP Extension Architecture Documentation
+
+## Core Components:
+1. **Content Script (content.js)** - Runs on web pages, detects MCP blocks
+2. **Background Script (background.js)** - Manages extension lifecycle and API calls  
+3. **Popup Interface (popup.html/js)** - User controls and buffer management
+4. **Storage System** - Browser-based buffer storage with planned S3 integration
+
+## Key Functions:
+- scanMCP() - Regex-based detection of [MCP-START]...[MCP-END] blocks
+- viewBuffers() - Console display of captured memory buffers
+- clearBuffers() - Reset buffer array for fresh start
+
+## Usage Patterns:
+- Manual scanning via blue scan button
+- Console API for programmatic access
+- Buffer deduplication to prevent duplicates
+- Timestamp tracking for chronological organization
+
+## Next Development Phase:
+- Implement S3 cloud storage backend
+- Add buffer search and filtering capabilities
+- Cross-session persistence restoration
+- Enhanced metadata extraction and tagging
+[MCP-END]
+            </div>
+        </div>
+
+        <!-- Test Block 4: Troubleshooting Log -->
+        <div class="test-block">
+            <div class="block-title">Test Block 4: Troubleshooting Log</div>
+            <div class="mcp-content">
+[MCP-START]
+TROUBLESHOOTING LOG - MCP Extension Testing Session
+Date: 2025-05-29
+Session: Initial validation testing
+
+ISSUE: Extension scan button not appearing
+SOLUTION: Verified extension enabled in chrome://extensions/, refreshed webpage
+STATUS: ✅ RESOLVED
+
+ISSUE: MCP blocks not detected during scan
+DIAGNOSIS: Checked exact format - must use [MCP-START] and [MCP-END] (case sensitive)
+SOLUTION: Updated test blocks with correct format
+STATUS: ✅ RESOLVED  
+
+ISSUE: Buffer count showing 0 after successful scan
+DIAGNOSIS: Opened Developer Console, ran window.mcpBuffers.length
+RESULT: Buffers were captured but not displaying in popup UI
+SOLUTION: Fixed popup.js executeScript API call
+STATUS: ✅ RESOLVED
+
+VALIDATION CHECKLIST:
+□ Extension loads without errors
+□ Scan button appears on page
+□ MCP blocks detected (expected: 4 blocks)
+□ viewBuffers() shows captured content
+□ Buffer count matches detected blocks
+□ Content integrity preserved
+□ Timestamps recorded correctly
+□ No duplicate captures on rescan
+
+PERFORMANCE NOTES:
+- Scan time: <100ms for 4 blocks
+- Memory usage: Minimal impact
+- Browser compatibility: Chrome/Chromium tested
+[MCP-END]
+            </div>
+        </div>
+
+        <div class="validation">
+            <strong>Expected Validation Results:</strong><br>
+            • Total MCP blocks detected: <strong>4</strong><br>
+            • Buffer array length: <strong>4</strong><br>
+            • Content types: Python code, JSON config, documentation, troubleshooting log<br>
+            • Each buffer should have content and timestamp properties
+        </div>
+
+        <div class="instructions">
+            <strong>Console Validation Commands:</strong><br>
+            <code>window.mcpBuffers.length</code> - Should return 4<br>
+            <code>viewBuffers()</code> - Display all captured content<br>
+            <code>clearBuffers()</code> - Reset for retesting<br>
+            <code>scanMCP()</code> - Manual scan trigger
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "name": "mcp-local-client",
+  "version": "1.0.0",
+  "description": "Local MCP client for receiving and storing Claude memory blocks",
+  "main": "local-mcp-client.js",
+  "scripts": {
+    "start": "node local-mcp-client.js",
+    "dev": "nodemon local-mcp-client.js",
+    "test": "curl http://localhost:3001/health"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "mcp",
+    "memory",
+    "claude",
+    "ai",
+    "persistence"
+  ],
+  "author": "MCP Development Team",
+  "license": "MIT"
+}

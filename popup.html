@@ -3,12 +3,12 @@
 <head>
     <style>
         body {
-            width: 350px;
-            min-height: 400px;
+            width: 380px;
+            min-height: 450px;
             margin: 0;
             padding: 16px;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
             color: white;
         }
         
@@ -21,84 +21,171 @@
             font-size: 18px;
             font-weight: 600;
             margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
         
         .subtitle {
             font-size: 12px;
-            opacity: 0.8;
+            opacity: 0.9;
             margin: 4px 0 0 0;
         }
         
+        .strict-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
         .section {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 12px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 16px;
             margin-bottom: 12px;
             backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         .stats {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
         }
         
         .stat-item {
             text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 8px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
         
         .stat-number {
             font-size: 20px;
             font-weight: bold;
+            margin-bottom: 4px;
         }
         
         .stat-label {
-            font-size: 11px;
-            opacity: 0.8;
+            font-size: 10px;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
         
         .button {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border: none;
-            border-radius: 6px;
-            font-weight: 500;
+            border-radius: 8px;
+            font-weight: 600;
             cursor: pointer;
-            margin: 4px 0;
+            margin: 6px 0;
             transition: all 0.2s;
+            font-size: 13px;
+            letter-spacing: 0.3px;
         }
         
         .btn-primary {
-            background: #4CAF50;
-            color: white;
+            background: rgba(255, 255, 255, 0.9);
+            color: #2e7d32;
+            border: 2px solid rgba(255, 255, 255, 0.5);
         }
         
         .btn-primary:hover {
-            background: #45a049;
+            background: white;
             transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
         
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
             color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
         }
         
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
         }
         
         .btn-danger {
             background: #f44336;
             color: white;
+            border: 2px solid #d32f2f;
         }
         
         .btn-danger:hover {
-            background: #da190b;
+            background: #d32f2f;
+            transform: translateY(-1px);
+        }
+        
+        .format-rules {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            margin: 12px 0;
+            font-family: monospace;
+            font-size: 11px;
+            line-height: 1.4;
+            border-left: 4px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .format-example {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px;
+            border-radius: 4px;
+            margin: 8px 0;
+            font-family: monospace;
+            font-size: 10px;
+        }
+        
+        .format-good {
+            border-left: 4px solid #81c784;
+        }
+        
+        .format-bad {
+            border-left: 4px solid #e57373;
+        }
+        
+        .status {
+            font-size: 11px;
+            text-align: center;
+            padding: 8px;
+            margin: 8px 0;
+            border-radius: 6px;
+            display: none;
+            font-weight: 600;
+        }
+        
+        .status.success {
+            background: rgba(129, 199, 132, 0.3);
+            border: 1px solid rgba(129, 199, 132, 0.5);
+            display: block;
+        }
+        
+        .status.error {
+            background: rgba(229, 115, 115, 0.3);
+            border: 1px solid rgba(229, 115, 115, 0.5);
+            display: block;
+        }
+        
+        .status.info {
+            background: rgba(100, 181, 246, 0.3);
+            border: 1px solid rgba(100, 181, 246, 0.5);
+            display: block;
         }
         
         .buffer-list {
-            max-height: 150px;
+            max-height: 120px;
             overflow-y: auto;
             margin-top: 8px;
         }
@@ -107,10 +194,11 @@
             background: rgba(255, 255, 255, 0.1);
             padding: 8px;
             margin: 4px 0;
-            border-radius: 4px;
-            font-size: 12px;
+            border-radius: 6px;
+            font-size: 11px;
             cursor: pointer;
             transition: background 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .buffer-item:hover {
@@ -118,43 +206,53 @@
         }
         
         .buffer-preview {
-            opacity: 0.8;
+            opacity: 0.9;
             margin-top: 4px;
             font-size: 10px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            font-family: monospace;
         }
         
-        .status {
+        .compliance-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
             font-size: 11px;
-            text-align: center;
-            padding: 8px;
             margin: 8px 0;
-            border-radius: 4px;
-            display: none;
         }
         
-        .status.success {
-            background: rgba(76, 175, 80, 0.3);
-            display: block;
+        .compliance-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
         }
         
-        .status.error {
-            background: rgba(244, 67, 54, 0.3);
-            display: block;
+        .compliance-good {
+            background: #81c784;
         }
         
-        .status.info {
-            background: rgba(33, 150, 243, 0.3);
-            display: block;
+        .compliance-warning {
+            background: #ffb74d;
+        }
+        
+        .compliance-bad {
+            background: #e57373;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1 class="title">🧠 MCP Memory</h1>
-        <p class="subtitle">Memory Collection Protocol</p>
+        <h1 class="title">
+            🧠 MCP Memory
+            <span class="strict-badge">Strict Mode</span>
+        </h1>
+        <p class="subtitle">Ultra-Strict Memory Collection Protocol</p>
     </div>
     
     <div class="section">
@@ -172,20 +270,51 @@
                 <div class="stat-label">Session</div>
             </div>
         </div>
+        
+        <div class="compliance-indicator" id="complianceStatus">
+            <div class="compliance-dot compliance-good" id="complianceDot"></div>
+            <span id="complianceText">Checking format compliance...</span>
+        </div>
     </div>
     
     <div class="section">
         <button class="button btn-primary" id="scanBtn">🔍 Scan for MCP Blocks</button>
         <button class="button btn-secondary" id="viewBuffersBtn">👁️ View Buffers</button>
-        <button class="button btn-secondary" id="uploadBtn">☁️ Upload to S3</button>
+        <button class="button btn-secondary" id="testFormatBtn">📋 Test Format</button>
+        <button class="button btn-secondary" id="uploadBtn">☁️ Send to Client</button>
         <button class="button btn-danger" id="clearBtn">🗑️ Clear Buffers</button>
     </div>
     
     <div class="status" id="statusMsg"></div>
     
     <div class="section" id="bufferSection" style="display: none;">
-        <h3 style="margin: 0 0 8px 0; font-size: 14px;">Recent Buffers</h3>
+        <h3 style="margin: 0 0 8px 0; font-size: 13px; font-weight: 600;">Recent Buffers</h3>
         <div class="buffer-list" id="bufferList"></div>
+    </div>
+
+    <div class="section">
+        <h3 style="margin: 0 0 8px 0; font-size: 13px; font-weight: 600;">📖 Format Rules</h3>
+        <div class="format-rules">
+            <strong>STRICT MODE REQUIREMENTS:</strong>
+            <div class="format-example format-good">
+                ✅ CORRECT (with code blocks):<br>
+                ```<br>
+                [MCP-START]<br>
+                Your content here<br>
+                [MCP-END]<br>
+                ```
+            </div>
+            <div class="format-example format-bad">
+                ❌ WRONG:<br>
+                [MCP-START]content[MCP-END]<br>
+                text [MCP-START]<br>
+                [MCP-END] text
+            </div>
+            <small>• Always use code blocks (```) around MCP blocks<br>
+            • MCP tags must be on their own lines<br>
+            • Case sensitive: [MCP-START] / [MCP-END]<br>
+            • No inline text with tags</small>
+        </div>
     </div>
 
     <script>
@@ -205,31 +334,57 @@
             statusEl.className = `status ${type}`;
             setTimeout(() => {
                 statusEl.style.display = 'none';
-            }, 3000);
+            }, 4000);
         }
         
-        // Update buffer statistics
+        // Update compliance status
+        function updateComplianceStatus(hasIssues = false, details = '') {
+            const dot = document.getElementById('complianceDot');
+            const text = document.getElementById('complianceText');
+            
+            if (hasIssues) {
+                dot.className = 'compliance-dot compliance-warning';
+                text.textContent = `Format issues detected: ${details}`;
+            } else {
+                dot.className = 'compliance-dot compliance-good';
+                text.textContent = 'All blocks follow strict format rules';
+            }
+        }
+        
+        // Simplified update buffer statistics
         function updateStats() {
             chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
                 chrome.tabs.executeScript(tabs[0].id, {
                     code: `
                         const buffers = window.mcpBuffers || [];
                         const totalSize = buffers.reduce((sum, buf) => sum + buf.content.length, 0);
+                        const validation = window.validateMCPFormat ? window.validateMCPFormat(document.body.innerText) : { hasIssues: false };
                         ({
                             count: buffers.length,
                             size: Math.round(totalSize / 1024 * 10) / 10,
+                            validation: validation,
                             buffers: buffers.slice(-5).map(buf => ({
-                                preview: buf.content.substring(0, 50) + (buf.content.length > 50 ? '...' : ''),
+                                preview: buf.content.substring(0, 60) + (buf.content.length > 60 ? '...' : ''),
                                 timestamp: buf.timestamp,
-                                size: buf.content.length
+                                size: buf.content.length,
+                                formatVersion: buf.formatVersion || 'legacy',
+                                wordCount: buf.wordCount || 0
                             }))
                         });
                     `
                 }, function(result) {
+                    if (chrome.runtime.lastError) {
+                        console.warn('Stats update error:', chrome.runtime.lastError.message);
+                        return;
+                    }
                     if (result && result[0]) {
                         const data = result[0];
                         document.getElementById('bufferCount').textContent = data.count;
                         document.getElementById('totalSize').textContent = data.size + 'KB';
+                        
+                        // Update compliance status
+                        updateComplianceStatus(data.validation.hasIssues, 
+                            data.validation.hasIssues ? 'See console for details' : '');
                         
                         // Update buffer list
                         const bufferList = document.getElementById('bufferList');
@@ -239,7 +394,13 @@
                             bufferSection.style.display = 'block';
                             bufferList.innerHTML = data.buffers.map(buf => `
                                 <div class="buffer-item">
-                                    <div>${new Date(buf.timestamp).toLocaleTimeString()}</div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span>${new Date(buf.timestamp).toLocaleTimeString()}</span>
+                                        <span style="font-size: 9px; opacity: 0.7;">${buf.formatVersion}</span>
+                                    </div>
+                                    <div style="font-size: 9px; margin: 2px 0; opacity: 0.8;">
+                                        ${buf.wordCount} words • ${buf.size} chars
+                                    </div>
                                     <div class="buffer-preview">${buf.preview}</div>
                                 </div>
                             `).join('');
@@ -256,20 +417,42 @@
             chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
                 chrome.tabs.executeScript(tabs[0].id, {
                     code: `
-                        if (typeof scanForMCPBlocks === 'function') {
-                            const found = scanForMCPBlocks();
+                        if (typeof scanMCP === 'function') {
+                            const found = scanMCP();
                             found;
                         } else {
-                            'MCP scanner not found - please reload the page';
+                            'MCP strict scanner not found - please reload the page';
                         }
                     `
                 }, function(result) {
                     if (result && result[0]) {
                         if (typeof result[0] === 'number') {
-                            showStatus(`Found ${result[0]} new MCP blocks!`, 'success');
+                            showStatus(`Found ${result[0]} strict-format MCP blocks!`, 'success');
                         } else {
                             showStatus(result[0], 'error');
                         }
+                        updateStats();
+                    }
+                });
+            });
+        });
+        
+        // Test format compliance
+        document.getElementById('testFormatBtn').addEventListener('click', function() {
+            chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                chrome.tabs.executeScript(tabs[0].id, {
+                    code: `
+                        if (typeof testMCPFormat === 'function') {
+                            const result = testMCPFormat();
+                            result.hasIssues ? 'Format issues found - check console' : 'All blocks properly formatted';
+                        } else {
+                            'Format test function not found';
+                        }
+                    `
+                }, function(result) {
+                    if (result && result[0]) {
+                        const isError = result[0].includes('issues');
+                        showStatus(result[0], isError ? 'error' : 'success');
                         updateStats();
                     }
                 });
@@ -281,10 +464,10 @@
             chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
                 chrome.tabs.executeScript(tabs[0].id, {
                     code: `
-                        console.log('=== MCP BUFFERS ===');
+                        console.log('=== MCP BUFFERS (STRICT MODE) ===');
                         console.log(window.mcpBuffers || []);
-                        console.log('Use getMCPBuffers() to access programmatically');
-                        'Buffers logged to console';
+                        console.log('Use viewBuffers() for detailed view');
+                        'Buffers logged to console (strict mode)';
                     `
                 }, function(result) {
                     showStatus('Buffers logged to console', 'info');
@@ -292,21 +475,21 @@
             });
         });
         
-        // Upload to S3
+        // Send to MCP client
         document.getElementById('uploadBtn').addEventListener('click', function() {
             chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
                 chrome.tabs.executeScript(tabs[0].id, {
                     code: `
-                        if (typeof sendBuffersToS3 === 'function') {
-                            sendBuffersToS3().then(result => {
-                                console.log('S3 Upload Result:', result);
-                                return 'Upload initiated - check console for results';
+                        if (typeof sendPendingBuffers === 'function') {
+                            sendPendingBuffers().then(result => {
+                                console.log('MCP Client Send Result:', result);
+                                return result.success ? 'Strict-format blocks sent to client' : 'Send failed - check console';
                             }).catch(err => {
-                                console.error('S3 Upload Error:', err);
-                                return 'Upload failed - check console for details';
+                                console.error('Send Error:', err);
+                                return 'Send failed - check console for details';
                             });
                         } else {
-                            'S3 upload function not found';
+                            'Send function not found';
                         }
                     `
                 }, function(result) {
@@ -323,9 +506,9 @@
                 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
                     chrome.tabs.executeScript(tabs[0].id, {
                         code: `
-                            if (typeof clearMCPBuffers === 'function') {
-                                clearMCPBuffers();
-                                'Buffers cleared';
+                            if (typeof clearBuffers === 'function') {
+                                clearBuffers();
+                                'Strict-mode buffers cleared';
                             } else {
                                 'Clear function not found';
                             }
@@ -341,8 +524,7 @@
         // Initial stats update
         updateStats();
         
-        // Refresh stats every 5 seconds
-        setInterval(updateStats, 5000);
+        // Refresh stats every 3 seconds
+        setInterval(updateStats, 3000);
     </script>
 </body>
-</html>

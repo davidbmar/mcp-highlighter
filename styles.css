@@ -1,30 +1,229 @@
-/* Styles for MCP highlighted text */
+/* 
+ * MCP Memory System - Strict Mode Styles
+ * =====================================
+ * 
+ * Enhanced styling for the ultra-strict MCP block detection system
+ * Green theme indicates strict mode operation
+ */
+
+/* Highlight properly formatted MCP blocks in green */
 .mcp-highlight {
-  background-color: #ffff00 !important; /* Bright yellow background */
-  color: #000000 !important; /* Black text for contrast */
-  padding: 2px 4px !important;
-  border-radius: 3px !important;
-  font-weight: bold !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
-  display: inline !important;
+  background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%) !important;
+  color: #1b5e20 !important;
+  padding: 4px 8px !important;
+  border-radius: 6px !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3) !important;
+  border-left: 4px solid #4caf50 !important;
+  display: inline-block !important;
+  margin: 2px 0 !important;
 }
 
-/* Animation for newly highlighted text */
+/* Animation for newly detected strict-format blocks */
 .mcp-highlight {
-  animation: mcp-glow 0.5s ease-in-out;
+  animation: mcpStrictGlow 0.8s ease-in-out;
 }
 
-@keyframes mcp-glow {
+@keyframes mcpStrictGlow {
   0% {
-    background-color: #ffff99;
+    background: #e8f5e9;
     transform: scale(1);
+    box-shadow: 0 0 0 rgba(76, 175, 80, 0);
   }
   50% {
-    background-color: #ffff00;
-    transform: scale(1.05);
+    background: #c8e6c9;
+    transform: scale(1.02);
+    box-shadow: 0 4px 20px rgba(76, 175, 80, 0.4);
   }
   100% {
-    background-color: #ffff00;
+    background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%);
     transform: scale(1);
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+  }
+}
+
+/* Style for format validation warnings */
+.mcp-format-warning {
+  background: #fff3cd !important;
+  color: #856404 !important;
+  border: 2px solid #ffc107 !important;
+  border-radius: 6px !important;
+  padding: 8px 12px !important;
+  font-family: monospace !important;
+  font-size: 12px !important;
+  margin: 4px 0 !important;
+  display: block !important;
+}
+
+/* Style for malformed MCP blocks (shown in debug mode) */
+.mcp-malformed {
+  background: #ffebee !important;
+  color: #c62828 !important;
+  border: 2px dashed #f44336 !important;
+  border-radius: 6px !important;
+  padding: 4px 8px !important;
+  font-family: monospace !important;
+  font-size: 11px !important;
+  opacity: 0.7 !important;
+  display: inline-block !important;
+}
+
+/* Enhanced scan button styling for strict mode */
+#mcp-scan-button {
+  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%) !important;
+  border: 2px solid #388e3c !important;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3) !important;
+  font-size: 13px !important;
+  letter-spacing: 0.5px !important;
+}
+
+#mcp-scan-button:hover {
+  background: linear-gradient(135deg, #45a049 0%, #388e3c 100%) !important;
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4) !important;
+  transform: translateY(-2px) !important;
+}
+
+#mcp-scan-button:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3) !important;
+}
+
+/* Status indicator styling for strict mode */
+#mcp-status {
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+  font-size: 11px !important;
+  letter-spacing: 0.3px !important;
+}
+
+/* Notification styling for strict mode */
+.mcp-notification {
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.3px !important;
+}
+
+/* Success notification (green theme) */
+.mcp-notification.success {
+  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%) !important;
+  border-color: #388e3c !important;
+}
+
+/* Error notification */
+.mcp-notification.error {
+  background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%) !important;
+  border-color: #c62828 !important;
+}
+
+/* Info notification */
+.mcp-notification.info {
+  background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%) !important;
+  border-color: #1565c0 !important;
+}
+
+/* Console output styling hints (for better readability) */
+.mcp-console-success {
+  color: #4caf50 !important;
+  font-weight: bold !important;
+}
+
+.mcp-console-warning {
+  color: #ff9800 !important;
+  font-weight: bold !important;
+}
+
+.mcp-console-error {
+  color: #f44336 !important;
+  font-weight: bold !important;
+}
+
+/* Strict mode indicator badge */
+.mcp-strict-badge {
+  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%) !important;
+  color: white !important;
+  padding: 2px 6px !important;
+  border-radius: 10px !important;
+  font-size: 10px !important;
+  font-weight: bold !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  box-shadow: 0 1px 3px rgba(76, 175, 80, 0.3) !important;
+  border: 1px solid #388e3c !important;
+}
+
+/* Format compliance indicator */
+.mcp-format-compliant {
+  background: #e8f5e9 !important;
+  color: #2e7d32 !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  border-left: 3px solid #4caf50 !important;
+  font-family: monospace !important;
+  font-size: 12px !important;
+  margin: 2px 0 !important;
+  display: inline-block !important;
+}
+
+.mcp-format-non-compliant {
+  background: #ffebee !important;
+  color: #c62828 !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  border-left: 3px solid #f44336 !important;
+  font-family: monospace !important;
+  font-size: 12px !important;
+  margin: 2px 0 !important;
+  display: inline-block !important;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+  #mcp-scan-button {
+    padding: 10px 12px !important;
+    font-size: 12px !important;
+    top: 10px !important;
+    right: 10px !important;
+  }
+  
+  #mcp-status {
+    top: 10px !important;
+    right: 140px !important;
+    padding: 6px 10px !important;
+    font-size: 10px !important;
+  }
+  
+  .mcp-notification {
+    max-width: 250px !important;
+    top: 60px !important;
+    right: 10px !important;
+    font-size: 13px !important;
+  }
+}
+
+/* Dark mode compatibility */
+@media (prefers-color-scheme: dark) {
+  .mcp-highlight {
+    background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%) !important;
+    color: #e8f5e9 !important;
+    border-left-color: #66bb6a !important;
+  }
+  
+  .mcp-format-compliant {
+    background: #1b5e20 !important;
+    color: #a5d6a7 !important;
+    border-left-color: #66bb6a !important;
+  }
+  
+  .mcp-format-warning {
+    background: #3e2723 !important;
+    color: #ffcc02 !important;
+    border-color: #ff8f00 !important;
+  }
+  
+  .mcp-malformed {
+    background: #3f1a1a !important;
+    color: #ffab91 !important;
+    border-color: #ff5722 !important;
   }
 }

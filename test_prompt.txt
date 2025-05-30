@@ -1,0 +1,125 @@
+# 🧪 MCP Extension Test Prompt (Code Block Format)
+
+Copy and paste this into a **fresh Claude conversation**:
+
+---
+
+**I need you to help me test my ultra-strict MCP (Memory Collection Protocol) Chrome extension. Please create exactly 4 MCP memory blocks using the format specified below.**
+
+**CRITICAL REQUIREMENTS:**
+
+1. **Enclose ALL your MCP blocks in a single code block** using three backticks (```)
+2. **Start your response with:** ```
+3. **End your response with:** ```
+4. **Put all 4 MCP blocks inside the code block**
+
+**MCP FORMAT RULES (Inside the code block):**
+- MCP tags MUST be on their own lines
+- Use exactly: [MCP-START] and [MCP-END] (case sensitive)
+- No inline text with MCP tags
+- Content between tags can be multiple lines
+
+**Create these 4 test blocks:**
+
+1. **Python Function** - A function that processes data with error handling
+2. **JSON Configuration** - Database and API settings for a web application
+3. **Project Documentation** - Implementation plan for an AI memory system
+4. **Debug Log** - Troubleshooting steps for Chrome extension issues
+
+**Your response should look exactly like this:**
+
+```
+[MCP-START]
+# Python Function Example
+def process_user_data(data):
+    """Process and validate user input data"""
+    if not data:
+        raise ValueError("Data cannot be empty")
+    return {"processed": True, "data": data}
+[MCP-END]
+
+[MCP-START]
+{
+  "database": {
+    "host": "localhost",
+    "port": 5432,
+    "name": "mcp_system"
+  },
+  "api": {
+    "endpoint": "/api/v1/memories",
+    "timeout": 30000
+  }
+}
+[MCP-END]
+
+[MCP-START]
+# AI Memory System Implementation
+## Phase 1: Core Development
+- Browser extension with strict MCP parsing
+- Local client for data persistence
+- Real-time synchronization
+## Phase 2: Advanced Features  
+- Search and retrieval capabilities
+- Cross-session memory integration
+[MCP-END]
+
+[MCP-START]
+## Chrome Extension Debug Guide
+### Issue: Extension not loading
+1. Check manifest.json syntax
+2. Verify permissions are correct
+3. Reload extension in chrome://extensions/
+4. Check console for errors
+### Issue: Content script not working
+1. Verify matches pattern in manifest
+2. Check for JavaScript errors
+3. Test on different websites
+[MCP-END]
+```
+
+**Make each block substantial (50+ words) for proper testing.**
+
+---
+
+## Expected Test Results After You Respond:
+
+### **1. Start MCP Client First:**
+```bash
+cd mcp-local-client
+npm start
+```
+
+### **2. Browser Testing:**
+- Click the green 🧠 SCAN (STRICT) button
+- Should see: "Found 4 strict-format MCP blocks!"
+- Status indicator: 🟢 MCP (4)
+
+### **3. Console Validation:**
+```javascript
+viewBuffers()           // Should show 4 buffers, all sent: ✅ Yes
+testMCPFormat()         // Should show: ✅ All blocks properly formatted
+getMCPClientStatus()    // Should show: {status: "healthy", memoryCount: 4}
+```
+
+### **4. Expected Console Output:**
+```
+🔍 MCP Scan Results (Strict Mode):
+  • Found: 4 properly formatted blocks
+  • New: 4 blocks
+  • Skipped: 0 duplicates
+  • Buffer total: 4
+
+📊 Format Validation:
+  • Total [MCP-START] markers: 4
+  • Total [MCP-END] markers: 4  
+  • Valid strict-format blocks: 4
+
+✅ All blocks follow strict format rules
+```
+
+### **5. MCP Client Verification:**
+- Visit: `http://localhost:3001`
+- Should show 4 new memory entries
+- Each with format version: "strict-v2"
+
+**The code block format ensures clean scanning and prevents browser rendering issues!** 🎯

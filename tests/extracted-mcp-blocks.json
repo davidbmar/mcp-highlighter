@@ -1,0 +1,30 @@
+{
+  "extractedAt": "2025-05-30T01:24:14.070Z",
+  "totalBlocks": 4,
+  "blocks": [
+    {
+      "id": "html-extract-1748568254071-0",
+      "content": "def calculate_fibonacci_sequence(n):\n    \"\"\"\n    Generate Fibonacci sequence up to n numbers\n    Optimized version with memoization for better performance\n    \"\"\"\n    if n &lt;= 0:\n        return []\n    elif n == 1:\n        return [0]\n    elif n == 2:\n        return [0, 1]\n    \n    fib_sequence = [0, 1]\n    for i in range(2, n):\n        next_fib = fib_sequence[i-1] + fib_sequence[i-2]\n        fib_sequence.append(next_fib)\n    \n    return fib_sequence\n\n# Usage example:\n# result = calculate_fibonacci_sequence(10)\n# print(result)  # [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]",
+      "extractedFrom": "claude-conversation.html",
+      "blockNumber": 1
+    },
+    {
+      "id": "html-extract-1748568254071-1",
+      "content": "{\n  \"project\": {\n    \"name\": \"MCP Chrome Extension\",\n    \"version\": \"1.0.0\",\n    \"description\": \"Memory Collection Protocol for persistent LLM context\"\n  },\n  \"features\": {\n    \"memory_capture\": true,\n    \"buffer_storage\": true,\n    \"console_api\": true,\n    \"s3_integration\": \"planned\",\n    \"cross_session_persistence\": \"in_development\"\n  },\n  \"configuration\": {\n    \"max_buffer_size\": 1000,\n    \"auto_scan\": false,\n    \"deduplication\": true,\n    \"timestamp_format\": \"ISO-8601\"\n  },\n  \"api_endpoints\": {\n    \"scan\": \"/api/scan\",\n    \"buffers\": \"/api/buffers\",\n    \"upload\": \"/api/s3/upload\",\n    \"clear\": \"/api/buffers/clear\"\n  },\n  \"status\": \"active_testing\"\n}",
+      "extractedFrom": "claude-conversation.html",
+      "blockNumber": 2
+    },
+    {
+      "id": "html-extract-1748568254071-2",
+      "content": "# MCP Extension Architecture Documentation\n\n## Core Components:\n1. **Content Script (content.js)** - Runs on web pages, detects MCP blocks\n2. **Background Script (background.js)** - Manages extension lifecycle and API calls  \n3. **Popup Interface (popup.html/js)** - User controls and buffer management\n4. **Storage System** - Browser-based buffer storage with planned S3 integration\n\n## Key Functions:\n- scanMCP() - Regex-based detection of [MCP-START]...",
+      "extractedFrom": "claude-conversation.html",
+      "blockNumber": 3
+    },
+    {
+      "id": "html-extract-1748568254071-3",
+      "content": "TROUBLESHOOTING LOG - MCP Extension Testing Session\nDate: 2025-05-29\nSession: Initial validation testing\n\nISSUE: Extension scan button not appearing\nSOLUTION: Verified extension enabled in chrome://extensions/, refreshed webpage\nSTATUS: ✅ RESOLVED\n\nISSUE: MCP blocks not detected during scan\nDIAGNOSIS: Checked exact format - must use [MCP-START] and",
+      "extractedFrom": "claude-conversation.html",
+      "blockNumber": 4
+    }
+  ]
+}
