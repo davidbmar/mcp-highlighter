@@ -2,11 +2,11 @@
   "name": "mcp-memory-client",
   "version": "2.0.0",
   "description": "MCP client that bridges browser extension to MCP servers",
-  "main": "build/mcp-client.js",
+  "main": "build/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node build/mcp-client.js",
-    "dev": "tsc && node build/mcp-client.js",
+    "start": "node build/index.js",
+    "dev": "tsc && node build/index.js",
     "clean": "rm -rf build",
     "rebuild": "npm run clean && npm run build"
   },
