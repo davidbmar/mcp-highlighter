@@ -1,0 +1,6 @@
+1. User scans page → Extension finds 4 MCP blocks
+2. Extension generates hashes → ["abc123", "def456", "ghi789", "jkl012"]
+3. Extension asks server → "Have you seen these hashes?"
+4. Server responds → {"abc123": true, "def456": false, "ghi789": true, "jkl012": false}
+5. Extension sends only new content → 2 blocks (def456, jkl012)
+6. Server stores new blocks → Reports "2 stored, 2 duplicates"

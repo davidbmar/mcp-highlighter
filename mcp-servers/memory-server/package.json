@@ -6,28 +6,21 @@
   "scripts": {
     "build": "tsc",
     "start": "node build/mcp-client.js",
-    "start:legacy": "node src/legacy-local-mcp-client.js",
     "dev": "tsc && node build/mcp-client.js",
     "clean": "rm -rf build",
     "rebuild": "npm run clean && npm run build"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.12.1",
-    "cors": "^2.8.5",
-    "express": "^4.21.2"
+    "@modelcontextprotocol/sdk": "latest",
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.18",
-    "@types/express": "^4.17.22",
-    "@types/node": "^22.15.29",
-    "typescript": "^5.8.3"
+    "@types/node": "^20.0.0",
+    "@types/express": "^4.17.21",
+    "typescript": "^5.0.0"
   },
-  "keywords": [
-    "mcp",
-    "client",
-    "memory",
-    "bridge"
-  ],
+  "keywords": ["mcp", "client", "memory", "bridge"],
   "author": "MCP Development Team",
   "license": "MIT"
 }
